@@ -1,5 +1,11 @@
-const Input = ({ type = "text", label, name, value, error_msg }) => {
-  // const errorClass = error_msg ? "active" : "";
+const Input = ({
+  type = "text",
+  label,
+  name,
+  value,
+  error_msg,
+  handleChange,
+}) => {
   const errorClass = error_msg ? "has-error" : "";
   return (
     <div className="form-field-box">
@@ -8,10 +14,9 @@ const Input = ({ type = "text", label, name, value, error_msg }) => {
         type={type}
         name={name}
         defaultValue={value}
-        // className="form-field"
         className={`form-field ${errorClass}`}
+        onChange={handleChange}
       />
-      {/* <p className={`form-field-error ${errorClass}`}>{error_msg}&nbsp;</p> */}
       {error_msg && <p className="form-field-error-full">{error_msg}</p>}
     </div>
   );

@@ -17,7 +17,10 @@ const ListItem = ({ program, isChosen = false }) => {
     <li className="row" ref={listItemRef}>
       <div className="row-details">
         <p className="row-line col-span-1">{time(date)}</p>
-        <h5 className="row-title col-span-5 line-clamp-1">{program.title}</h5>
+        <h5 className="row-title col-span-5 line-clamp-1">
+          {program.title}
+          {program.channel ? `(${program.channel.title})` : ""}
+        </h5>
       </div>
     </li>
   );

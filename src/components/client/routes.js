@@ -8,6 +8,8 @@ import Channel from "components/channels/channel/Channel";
 import Registration from "components/client/Registration";
 import Login from "components/client/Login";
 import NotFound from "components/NotFound";
+import Account from "components/client/account/Account";
+import Favorites from "components/client/account/Favorites";
 
 export const clientRoutes = {
   path: "/",
@@ -42,6 +44,14 @@ export const clientRoutes = {
           element: <Channel />,
         },
       ],
+    },
+    {
+      path: "/account",
+      element: <Account />,
+    },
+    {
+      path: "/favorites",
+      element: <Favorites />,
     },
     {
       path: "/login",

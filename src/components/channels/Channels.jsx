@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import Search from "components/common/Search";
 import List from "components/channels/List";
-import Pagination from "components/channels/Pagination";
+import Pagination from "components/common/Pagination";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "utils/context";
 import { useChannelsData } from "components/channels/useChannelsData";
@@ -17,7 +17,7 @@ const Channels = () => {
       <Search placeholder="Search by title..." />
       {loading && <Loading />}
       {!loading && channels && <List channels={channels} />}
-      {!loading && meta && <Pagination meta={meta} />}
+      {!loading && channels && <Pagination meta={meta} />}
       <Outlet />
     </>
   );

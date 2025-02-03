@@ -1,0 +1,119 @@
+import Input from "components/common/form/Input";
+import Select from "components/common/form/Select";
+import Textarea from "components/common/form/Textarea";
+import useFormActions from "components/common/form/useFormActions";
+import { Link } from "react-router-dom";
+
+const getFormRowSize = () => {
+  if (window.innerWidth >= 768) {
+    return 3;
+  }
+
+  if (window.innerWidth >= 640) {
+    return 2;
+  }
+
+  return 1;
+};
+
+const Form = ({
+  oldData = [],
+  nativeFields = [],
+  actionPath,
+  fieldsPath = "",
+}) => {
+  const { onSubmit, loading, fields, errors } = useFormActions(
+    nativeFields,
+    actionPath,
+    oldData.length >= 1,
+    fieldsPath
+  );
+
+  const rowSize = getFormRowSize();
+  let counter = 1;
+  let constructedField = "";
+
+  console.log(chunkFields(fields, rowSize));
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="large-form">
+        {/* {chunkFields(fields, rowSize, oldData, errors).map((field) => {
+          return constructFieldRow(field, oldData, errors);
+        })} */}
+      </div>
+      {errors && <p className="description-error">{errors.message}</p>}
+      <div className="side-card-nav">
+        <div className="form-btn-container">
+          <Link to={"../"} className="side-card-btn">
+            Back
+          </Link>
+        </div>
+        <div className="form-btn-container">
+          <button type="submit" className="form-btn">
+            {loading ? "Loading" : "Save"}
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+};
+
+const chunkFields = (fields, sizeStep, size = 0) => {
+  // const chunk = [...fields.splice(0, size)];
+  // // console.log(chunk);
+  if (size < fields.length) {
+    return chunkFields(fields, sizeStep, size + sizeStep);
+  }
+  return fields.slice(size, sizeStep);
+};
+
+const constructFieldRow = (fields, oldData, errors) => {
+  return (
+    <div className="md:flex gap-4">
+      {fields.map((field) => {
+        return constructField(field, oldData, errors);
+      })}
+    </div>
+  );
+};
+
+const constructField = (field, oldData, errors) => {
+  if (field.type === "textarea") {
+    return (
+      <Textarea
+        key={field.name}
+        label={field.label}
+        name={field.name}
+        alterClass="md:col-span-2 lg:col-span-3"
+        value={oldData?.[field.name]}
+        error_msg={errors?.[field.name]}
+      />
+    );
+  }
+
+  if (field.type === "select") {
+    return (
+      <Select
+        key={field.name}
+        label={field.label}
+        name={field.name}
+        value={oldData?.[field.name]}
+        error_msg={errors?.[field.name]}
+        options={field.options}
+      />
+    );
+  }
+
+  return (
+    <Input
+      key={field.name}
+      type={field.type}
+      label={field.label}
+      name={field.name}
+      value={oldData?.[field.name]}
+      error_msg={errors?.[field.name]}
+    />
+  );
+};
+
+export default Form;

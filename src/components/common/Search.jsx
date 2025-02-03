@@ -23,7 +23,7 @@ const Search = ({ placeholder }) => {
 
   const today = new Date();
   const year = today.getFullYear();
-  const currentDay = today.getDate();
+  let currentDay = today.getDate();
   let month = today.getMonth() + 1;
   const daysInMonth = new Date(year, month, 0).getDate();
   let options = [];

@@ -2,7 +2,7 @@ import List from "components/programs/List";
 import { date } from "utils/formater";
 
 const ListItem = ({ channel, isHidden = false }) => {
-  if (!channel) {
+  if (!channel || !channel.programs) {
     return "";
   }
   return (
@@ -15,7 +15,7 @@ const ListItem = ({ channel, isHidden = false }) => {
       </h4>
       {channel.title && (
         <div className="box-list">
-          <List programs={channel.programs} changeGrid="-flat" />
+          <List programs={channel.programs} />
         </div>
       )}
       {!channel.title && <div className="overflow-y-auto h-40">&nbsp;</div>}

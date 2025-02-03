@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const ClientLayout = () => {
   return (
     <div className="body">
-      <MainNavigation />
+      <MainNavigation isClient={true} />
       <main className="base-container">
         <Outlet />
       </main>

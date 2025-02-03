@@ -27,7 +27,7 @@ export const AuthProvider = ({ children, isUser }) => {
       }}
     >
       {children}
-      <ErrorCards />
+      {/* <ErrorCards /> */}
     </AuthContext.Provider>
   );
 };

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
@@ -6,13 +6,13 @@ import { AuthContext } from "utils/context";
 import { useHttpService } from "utils/HttpService";
 import { useStorage } from "utils/useStorage";
 
-export function useChannelsData() {
+export function useProgramsData() {
   const [searchParams] = useSearchParams();
   const { isUser, userToken, clientToken } = useContext(AuthContext);
   const { setItem, getItem } = useStorage();
   let getMeta = false;
 
-  let url = `/channels?page_size=9`;
+  let url = `/programs?page_size=9`;
 
   if (searchParams.get("query")) {
     url += "&query=" + searchParams.get("query");
@@ -34,23 +34,23 @@ export function useChannelsData() {
 
   const { fetchData } = useHttpService(url);
   const {
-    data: channels,
+    data: programs,
     error,
     isPending: loading,
   } = useQuery({
     queryKey: [url, userToken],
     queryFn: () => fetchData(getMeta),
-    staleTime: 10 * 60 * 1000, // cache for 10 minutes
+    staleTime: 5 * 60 * 1000, // cache for 10 minutes
   });
 
   if (loading) {
     return [[], loading, null];
   }
-  if (channels?.meta) {
+  if (programs?.meta) {
     if (!getItem(metaURL)) {
-      setItem(metaURL, channels.meta);
+      setItem(metaURL, programs.meta);
     }
-    return [channels.data, loading, channels.meta];
+    return [programs.data, loading, programs.meta];
   }
-  return [channels, loading, getItem(metaURL)];
+  return [programs, loading, getItem(metaURL)];
 }

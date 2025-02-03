@@ -1,15 +1,13 @@
-import { useState } from "react";
-
 export const useStorage = () => {
   const setItem = (key, value) => {
-    sessionStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
     setTimeout(function () {
       removeItem(key);
     }, 3 * 60 * 1000);
   };
 
   const getItem = (key) => {
-    let value = sessionStorage.getItem(key);
+    let value = localStorage.getItem(key);
 
     try {
       value = JSON.parse(value);
@@ -21,7 +19,7 @@ export const useStorage = () => {
   };
 
   const removeItem = (key) => {
-    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
   };
 
   return { setItem, getItem, removeItem };

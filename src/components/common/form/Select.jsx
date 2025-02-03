@@ -1,4 +1,4 @@
-const Select = ({ label, name, value, error_msg, options }) => {
+const Select = ({ label, name, value, error_msg, options, handleChange }) => {
   const errorClass = error_msg ? "has-error" : "";
 
   let renderedOptions = [];
@@ -16,6 +16,7 @@ const Select = ({ label, name, value, error_msg, options }) => {
         name={name}
         defaultValue={value}
         className={`form-select ${errorClass}`}
+        onChange={handleChange}
       >
         {renderedOptions}
       </select>

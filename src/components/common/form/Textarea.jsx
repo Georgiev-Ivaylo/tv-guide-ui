@@ -1,4 +1,11 @@
-const Textarea = ({ label, name, value, error_msg, alterClass }) => {
+const Textarea = ({
+  label,
+  name,
+  value,
+  error_msg,
+  alterClass,
+  handleChange,
+}) => {
   const errorClass = error_msg ? "has-error" : "";
   return (
     <div className={`form-field-box ${alterClass}`}>
@@ -7,6 +14,7 @@ const Textarea = ({ label, name, value, error_msg, alterClass }) => {
         name={name}
         defaultValue={value}
         className={`form-field  w-full h-32 ${errorClass}`}
+        onChange={handleChange}
       />
       {error_msg && <p className="form-field-error-full">{error_msg}</p>}
     </div>

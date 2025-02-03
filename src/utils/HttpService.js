@@ -5,6 +5,7 @@ import { AuthContext, MessageContext } from "utils/context";
 
 export function useHttpConfiguration() {
   let url = process.env.REACT_APP_PUBLIC_HOST;
+  const navigate = useNavigate();
   const { isUser, userToken, clientToken, setUserToken, setClientToken } =
     useContext(AuthContext);
   const { errors, setErrors } = useContext(MessageContext);
@@ -12,6 +13,7 @@ export function useHttpConfiguration() {
     "Content-Type": "application/json",
   };
 
+  console.log(clientToken, isUser);
   if (isUser) {
     url += "/admin";
     headers.Authorization = `Bearer ${userToken}`;
@@ -41,22 +43,25 @@ export function useHttpConfiguration() {
         if (error.response.status === 419) {
           if (isUser) {
             setUserToken(null);
+            navigate("/admin/login");
           } else {
             setClientToken(null);
+            navigate("/login");
           }
         }
-        setErrors([...errors, error.response.data]);
+        setErrors([error.response.data, ...errors]);
         // return error.response;
+        return { data: { data: null, errors: error.response.data.data } };
       } else if (error.request) {
         // The request was made but no response was received
         console.error("Request error:", error.request);
-        setErrors([...errors, { message: "Something went wrong..." }]);
+        setErrors([{ message: "Something went wrong..." }, ...errors]);
       } else {
         // Something happened in setting up the request that triggered an error
         // console.error("Error:", error.message);
         setErrors([
-          ...errors,
           { message: "Something unexpected went wrong..." },
+          ...errors,
         ]);
       }
       // return {};
@@ -71,7 +76,6 @@ export function useHttpConfiguration() {
 export function useHttpService(pathname) {
   const apiCaller = useHttpConfiguration();
   const { toasts, setToasts } = useContext(MessageContext);
-  let newToasts = toasts;
   const navigate = useNavigate();
 
   const fetchData = async (isMetaRequired = false) => {
@@ -88,39 +92,39 @@ export function useHttpService(pathname) {
     return response.data.data;
   };
 
-  const createRecord = async (data, isNotPendingData = true) => {
+  const createRecord = async (data, cb = null) => {
     const response = await apiCaller.post(pathname, data);
 
-    if (response.status === 200 && isNotPendingData) {
-      newToasts.push(response.data);
-      setToasts(newToasts);
-      navigate(-1);
+    if (response.status === 200) {
+      if (cb) {
+        cb(response.data.data);
+      }
+      setToasts([response.data.message, ...toasts]);
+      navigate(response.data.data.redirect);
     }
-    return response.data.data;
+
+    return response.data;
   };
 
-  const editRecord = async (data, extraPath) => {
-    const response = await apiCaller.put(pathname + extraPath, {
-      data: data,
-    });
+  const editRecord = async (data, extraPath = "") => {
+    const response = await apiCaller.put(pathname + extraPath, data);
 
     if (response.status === 200) {
-      newToasts.push(response.data);
-      setToasts(newToasts);
-      navigate(-1);
+      setToasts([response.data.message, ...toasts]);
+      navigate(response.data.data.redirect);
     }
-    return response.data.data;
+    return response.data;
   };
 
   const deleteRecord = async () => {
     const response = await apiCaller.delete(pathname);
 
     if (response.status === 200) {
-      newToasts.push(response.data);
-      setToasts(newToasts);
+      setToasts([response.data.message, ...toasts]);
+      navigate(response.data.data.redirect);
       navigate(-1);
     }
-    return response.data.data;
+    return response.data;
   };
 
   return { fetchData, createRecord, editRecord, deleteRecord };

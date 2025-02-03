@@ -1,27 +1,18 @@
 import { useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
-import { useHttpService } from "utils/HttpService";
-
-const Pagination = () => {
+const Pagination = ({ meta }) => {
+  const [totalPages, setTotalPages] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  let url = "/programs?get_pages=true";
+  useEffect(() => {
+    if (meta === null) {
+      return;
+    }
 
-  if (searchParams.get("query") !== null) {
-    url += `&query=${searchParams.get("query")}`;
-  }
-  const { fetchData } = useHttpService(url);
-
-  const { data: totalPages, isPending: loading } = useQuery({
-    queryKey: [url],
-    queryFn: async () => {
-      const fullResponse = await fetchData(true);
-      return fullResponse.meta.last_page;
-    },
-    staleTime: 1000 * 60 * 10, // cache for 10 minutes
-  });
+    setTotalPages(meta.last_page);
+  }, [meta]);
 
   const createPageURL = (pageNumber) => {
     searchParams.set("page", pageNumber);

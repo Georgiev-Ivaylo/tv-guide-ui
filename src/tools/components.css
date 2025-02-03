@@ -30,6 +30,14 @@
     @apply shadow-[inset_0_0_10px_0] shadow-green-500;
   }
 
+  .frame-border-warning {
+    @apply shadow-pink-600 hover:shadow-pink-800;
+  }
+
+  .special-bg {
+    @apply border-green-600 dark:border-green-200 hover:border-green-800 dark:hover:border-green-400 text-green-600 dark:text-green-200 placeholder-green-600 dark:placeholder-green-200;
+  }
+
   .btn-bg {
     @apply box-bg frame-border hover:shadow-[inset_0_0_10px_2px] hover:shadow-green-400;
   }
@@ -48,7 +56,7 @@
   }
 
   .title {
-    @apply p-6 text-center text-4xl;
+    @apply p-6 text-center text-2xl md:text-4xl;
   }
 
   .description {
@@ -68,27 +76,31 @@
   .nav-btn {
     @apply block rounded btn-bg py-2 px-4 m-2 simple-animation;
   }
+  .nav-btn.warning {
+    @apply frame-border-warning;
+  }
   .main-menu {
     @apply relative flex-grow flex items-center w-auto;
   }
   .main-menu-btn {
-    @apply md:hidden w-32 h-12 bg-[url('./public/images/menu.svg')] bg-contain bg-no-repeat bg-center;
+    @apply md:hidden w-24 h-8 cursor-pointer bg-[url('./public/images/menu.svg')] bg-contain bg-no-repeat bg-center;
   }
   .main-menu-grid {
     /* @apply flex-grow flex items-center w-auto sm:hidden sm:absolute; */
     @apply flex-grow flex items-center w-auto max-md:account-grid max-md:w-full;
+    /* @apply flex-grow flex items-center w-auto md:account-grid md:w-full; */
   }
   .main-menu-grid.enabled {
-    @apply block max-h-80;
+    @apply block max-h-80 z-10;
   }
   .account-menu {
     @apply relative;
   }
   .account-btn {
-    @apply w-32 h-12 bg-[url('./public/images/account-inactive.svg')] bg-contain bg-no-repeat bg-center;
+    @apply w-24 h-8 md:w-32 md:h-12 cursor-pointer bg-[url('./public/images/account-inactive.svg')] bg-contain bg-no-repeat bg-center;
   }
   .account-btn.enabled {
-    @apply bg-[url('./public/images/account-active.svg')];
+    @apply bg-[url('./public/images/account-active.svg')] z-10;
   }
   .account-grid {
     @apply hidden absolute right-0 top-[110%] max-h-0 side-effect menu-bg p-2;
@@ -105,7 +117,7 @@
   }
 
   .side-nav-grid {
-    @apply rounded-lg p-4 m-1 col-span-2 flex flex-col text-center shadow-bi shadow-yellow-500;
+    @apply rounded-lg p-4 m-1 col-span-2 flex flex-col text-center shadow-bi frame-border;
   }
   /* .side-nav-grid {
     @apply rounded-lg p-4 m-1 col-span-2 grid grid-cols-1 gap-2 text-center shadow-[inset_0_0_4px_0] shadow-yellow-500;
@@ -126,7 +138,7 @@
     @apply box-bg rounded-sm border-2 p-2 simple-animation;
   }
   .box-title {
-    @apply p-2 text-center text-xl;
+    @apply p-2 text-center text-lg md:text-xl;
   }
 
   .box-list {
@@ -134,10 +146,10 @@
   }
 
   .row-grid {
-    @apply grid;
+    @apply grid p-2;
   }
   .row {
-    @apply rounded-sm bg-white bg-opacity-10 simple-animation even:bg-opacity-20 even:ml-3  odd:shadow-purple-800 odd:mr-3 hover:bg-opacity-30 [&>div>h5]:odd:pl-5;
+    @apply rounded-sm bg-purple-400 bg-opacity-10 simple-animation even:bg-opacity-20 even:ml-3  odd:shadow-purple-800 odd:mr-3 hover:bg-opacity-30 [&>div>h5]:odd:pl-5;
   }
   .row-title {
     @apply p-2 text-lg;
@@ -169,33 +181,36 @@
     @apply col-span-3 base-field;
   }
   .search-select {
-    @apply rounded-md p-2 text-orange-300  bg-transparent border-b-2 border-b-yellow-500;
+    @apply rounded-md p-2 bg-transparent border-b-2 special-bg;
   }
   .search-select-option {
     @apply block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
   }
 
+  .base-card-grid {
+    @apply rounded md:w-1/2 lg:w-1/3 px-2 bg-white bg-opacity-40 medium-animation fixed right-4 left-4 md:left-auto max-h-40 overflow-y-auto;
+  }
   .card-grid {
-    @apply rounded w-1/3 px-2 bg-white bg-opacity-20 fixed top-full bottom-0 right-4 medium-animation;
+    @apply base-card-grid top-full bottom-0;
   }
   .card-active {
     @apply top-auto bottom-4;
   }
   .card {
-    @apply my-2 rounded-sm border-2 border-yellow-400 p-2 hover:border-yellow-600 bg-white bg-opacity-10 simple-animation relative;
+    @apply my-2 rounded-sm border-2 border-yellow-400 p-2 hover:border-yellow-600 bg-white simple-animation relative;
   }
   .card-title {
     @apply p-2 text-center text-xl;
   }
   .card-title.for-error {
-    @apply text-cyan-400;
+    @apply text-cyan-800;
   }
   .card-btn {
-    @apply text-center rounded-2xl bg-yellow-400 cursor-pointer hover:bg-yellow-500 w-6 h-6 simple-animation absolute -top-3 -right-3;
+    @apply text-center rounded-2xl bg-yellow-400 cursor-pointer hover:bg-yellow-500 w-6 h-6 simple-animation absolute -top-2 -right-2;
   }
 
   .toast-card-grid {
-    @apply rounded w-1/3 px-2 bg-white bg-opacity-20 fixed top-0 bottom-full right-4 medium-animation;
+    @apply base-card-grid top-0 bottom-full;
   }
   .toast-card-active {
     @apply top-4 bottom-auto;
@@ -205,33 +220,50 @@
     @apply rounded p-2 box-bg min-h-screen fixed top-0 bottom-0 right-0 left-1/4 medium-animation overflow-y-scroll;
   }
   .side-card-nav {
-    @apply grid grid-cols-4 gap-2 p-4;
+    @apply p-2 flex gap-4 justify-center;
   }
   .side-card-btn {
-    @apply text-center text-xl rounded-e-lg border-b border-yellow-400 hover:border-yellow-900 p-1 text-black;
+    @apply px-4 py-2 text-center text-lg rounded-e-lg border-b special-bg;
   }
   .side-card-btn.warning {
     @apply text-rose-900 text-2xl font-bold;
   }
 
   .base-field {
-    @apply rounded-md p-2 text-orange-300 focus:ring-0 focus:outline-none focus:border-b-yellow-700 focus:bg-white focus:bg-opacity-10 placeholder-orange-300 bg-transparent border-b-2 border-b-yellow-500 simple-animation;
+    @apply special-bg rounded-md px-2 py-1 focus:ring-0 focus:outline-none focus:bg-white focus:bg-opacity-10 bg-transparent border-b-2 simple-animation;
+    /* @apply rounded-md p-2 text-orange-300 focus:ring-0 focus:outline-none focus:border-b-yellow-700 focus:bg-white focus:bg-opacity-10 placeholder-orange-300 bg-transparent border-b-2 border-b-yellow-500 simple-animation; */
   }
   .base-btn {
-    @apply rounded btn-bg p-1 simple-animation;
+    @apply rounded btn-bg p-2 simple-animation text-center;
+  }
+
+  .large-form {
+    @apply p-2;
   }
 
   .form {
     @apply w-4/5 m-auto p-4 grid grid-cols-1;
   }
+  .form-field-row {
+    @apply sm:flex gap-4 justify-center;
+  }
   .form-field-box {
-    @apply p-1 mb-4 relative;
+    @apply relative pb-4 sm:basis-1/3 md:basis-1/3;
   }
   .form-label {
     @apply block px-1;
   }
   .form-field {
     @apply base-field block w-full;
+  }
+  .form-field.pass {
+    @apply pl-10;
+  }
+  .form-field-show-pass {
+    @apply cursor-pointer absolute bottom-6 left-1 w-10 bg-[url('./public/images/eye-closed.svg')] bg-[length:32px_auto] bg-no-repeat bg-[center_right_0.5rem];
+  }
+  .form-field-show-pass.enabled {
+    @apply bg-[url('./public/images/eye-open.svg')];
   }
   .form-field.has-error {
     @apply warning-error-bg border-b-cyan-400;
@@ -243,40 +275,24 @@
     @apply warning-error-bg border-b-cyan-400;
   }
   .form-field-error {
-    @apply p-1 text-cyan-400 bg-white bg-opacity-0 simple-animation line-clamp-1;
+    @apply p-1 text-cyan-400 bg-purple-400 bg-opacity-0 simple-animation line-clamp-1;
   }
   .form-field-error.active {
     @apply bg-opacity-40;
   }
   .form-field-error-full {
-    @apply text-cyan-400 bg-white bg-opacity-80 simple-animation rounded absolute top-full left-0 right-0 bottom-0 z-10 overflow-hidden;
+    @apply text-cyan-200 bg-purple-400 bg-opacity-80 simple-animation rounded absolute top-full left-0 right-0 bottom-0 z-10 overflow-hidden;
   }
-  .form-field-box:hover .form-field-error-full {
+  .form-field-box:hover .form-field-error-full,
+  .form-field-box:focus-within .form-field-error-full {
     @apply p-1 bottom-auto;
   }
-  .form-btn {
-    @apply base-btn w-32 m-auto text-lg;
-  }
-
-  .large-form {
-    @apply p-2 grid md:grid-cols-2 lg:grid-cols-3 gap-2;
-  }
-  /* .large-form-field-box {
-    @apply p-1;
-  }
-  .large-form-label {
-    @apply block px-1;
-  }
-  .large-form-field {
-    @apply base-field;
-  }
-  .large-form-field-error {
-    @apply p-2 text-center text-xl text-red-700;
-  }
-  .large-form-btn {
-    @apply base-btn w-32 m-auto text-lg;
+  /* .form-btn-container {
+    @apply px-2;
   } */
-
+  .form-btn {
+    @apply base-btn px-4 text-xl;
+  }
   .simple-animation {
     @apply transition-all ease-in-out duration-300;
   }
@@ -294,7 +310,7 @@
   }
 
   .warning-error-bg {
-    @apply bg-[url('./public/images/warning-rhomb-filled-svgrepo-com.svg')] bg-[length:32px_auto] bg-no-repeat bg-[center_right_0.5rem];
+    @apply bg-[url('./public/images/warning-rhomb-filled-svgrepo-com.svg')] bg-[length:28px_auto] bg-no-repeat bg-[center_right_0.5rem];
   }
   /* 
   .warning-error-bg {

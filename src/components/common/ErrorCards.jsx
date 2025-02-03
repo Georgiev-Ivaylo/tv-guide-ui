@@ -1,4 +1,21 @@
+import { useEffect } from "react";
+
 const ErrorCards = ({ errors = [], setErrors }) => {
+  useEffect(() => {
+    //Implementing the setInterval method
+    const interval = setInterval(() => {
+      // if (errors.length >= 1) {
+      removeToast(errors.length - 1);
+      // }
+    }, 5 * 1000);
+    if (errors.length === 0) {
+      clearInterval(interval);
+    }
+
+    //Clearing the interval
+    return () => clearInterval(interval);
+  }, [errors]);
+
   function removeToast(index) {
     errors.splice(index, 1);
     setErrors([...errors]);
