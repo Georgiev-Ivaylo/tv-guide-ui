@@ -10,6 +10,7 @@ import Login from "components/client/Login";
 import NotFound from "components/NotFound";
 import Account from "components/client/account/Account";
 import Favorites from "components/client/account/Favorites";
+import Verify from "components/client/Verify";
 
 export const clientRoutes = {
   path: "/",
@@ -24,6 +25,10 @@ export const clientRoutes = {
     {
       path: "/",
       element: <Home />,
+    },
+    {
+      path: "/verify",
+      element: <Verify />,
     },
     {
       path: "/programs",
